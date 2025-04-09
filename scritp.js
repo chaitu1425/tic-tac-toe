@@ -51,21 +51,39 @@ const enableboxes = ()=>{
     }
 };
 const showwinner = (winner)=>{
-    msg.innerText = 'congratulations,winner is ' + winner;
+    msg.innerText = 'Congratulations,winner is ' + winner;
     msgcontainer.classList.remove("hide");
     disablesboxes();
 };
 
+const draw = ()=>{
+    msg.innerText ='Draw';
+    msgcontainer.classList.remove('hide');
+    disablesboxes();
+}
+
 const checkwinner = ()=>{
+    let isDraw =true;
     for(let pattern of patterns){
         let pos1=boxes[pattern[0]].innerText;
         let pos2=boxes[pattern[1]].innerText;
         let pos3=boxes[pattern[2]].innerText;
+        console.log(boxes[pattern[0]]); 
 
         if(pos1 != "" && pos2 != "" && pos3 != ""){
             if(pos1 === pos2 && pos2=== pos3){
                 showwinner(pos1);
             }
+        }
+
+        if (boxes[pattern[0]].innerText === "" || 
+            boxes[pattern[1]].innerText === "" || 
+            boxes[pattern[2]].innerText === "") {
+            isDraw = false;
+        }
+
+        if(isDraw && [...boxes].every(box=>box.innerText !="")){
+            draw();
         }
     }
 };
